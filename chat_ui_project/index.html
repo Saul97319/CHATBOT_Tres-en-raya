@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cliente-Servidor • UI</title>
+  <link rel="stylesheet" href="static/css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="avatar"><img src="static\img\nucleo.gif" alt="bot" onerror="this.style.display='none'"/></div>
+      <div>
+        <h1>Asistente de Preguntas</h1>
+        <div class="status-line">
+          <span id="serverStatus" class="badge off">Servidor: apagado</span>
+          <span id="clientStatus" class="badge off">Cliente: desconectado</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="controls">
+      <div class="group">
+        <button id="btnStartServer" class="btn">Encender servidor</button>
+        <button id="btnStopServer" class="btn subtle">Apagar servidor</button>
+      </div>
+
+      <div class="group">
+        <button id="btnConnect" class="btn">Conectar cliente</button>
+        <button id="btnDisconnect" class="btn subtle">Desconectar</button>
+      </div>
+
+      <div class="group">
+        <div class="dropdown">
+          <button class="btn ghost" id="menuBtn">⋯</button>
+          <div class="menu" id="menu">
+            <button id="btnToggleHistory">Ver historial</button>
+            <button id="btnClearHistory">Limpiar historial</button>
+            <button id="btnExitApp">Salir</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="layout">
+    <aside class="left-visual">
+      <div class="gif-holder">
+        <img src="static\img\nucleo.gif" alt="Animación" onerror="this.src=''; this.parentElement.classList.add('placeholder')" />
+      </div>
+      <p class="hint">Diego Saul Silva Baltazar.</p>
+    </aside>
+
+    <section class="chat-column">
+      <div id="chat" class="chat"></div>
+      <form id="composer" class="composer" autocomplete="off">
+        <input id="messageInput" type="text" placeholder="Escribe tu pregunta..." />
+        <button id="sendBtn" class="btn" type="submit">Enviar</button>
+      </form>
+    </section>
+
+    <aside id="historyPanel" class="history">
+      <h2>Historial de preguntas</h2>
+      <div id="historyList" class="history-list"></div>
+    </aside>
+  </main>
+
+  <template id="tpl-msg">
+    <div class="message">
+      <div class="bubble"></div>
+      <time></time>
+    </div>
+  </template>
+
+  <script src="static/js/app.js" defer></script>
+</body>
+</html>
