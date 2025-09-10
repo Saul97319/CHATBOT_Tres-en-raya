@@ -1,43 +1,113 @@
-# UI web para tu Cliente-Servidor (HTML + CSS + Flask)
+# UI Web para Cliente-Servidor (Flask + HTML + CSS) #
 
-Este proyecto incluye:
-- Botones para encender/apagar el servidor (`Servidor.py`).
-- Botones para conectar/desconectar el cliente.
-- Área de chat con burbujas.
-- Historial de preguntas.
-- Opción de Salir.
+## Descripción del proyecto ##
 
-> Requisitos: Python 3.10+, `pip install flask`
+Este proyecto implementa una interfaz web para interactuar con un sistema "Cliente-Servidor TCP".
+El frontend está construido en HTML, CSS y JavaScript, mientras que el backend utiliza Flask (Python) para gestionar la comunicación entre la interfaz y los procesos cliente/servidor.
 
-## Cómo ejecutar
+El sistema permite:
 
-1. Copia `Servidor.py` y `Cliente.py` a esta misma carpeta.
-2. En una terminal, ejecuta:
+* Encender y apagar el servidor TCP.
+* Conectar y desconectar un cliente.
+* Enviar mensajes al servidor y obtener respuestas.
+* Visualizar el historial de interacción en la interfaz web.
 
-```bash
-pip install flask
-python controller.py
-```
 
-4. Abre en el navegador: `http://127.0.0.1:5000/`
+## Requisitos del sistema ##
 
-## Notas técnicas
+* Python: versión 3.10 o superior
+* Flask: instalar con `pip install flask`
+* Navegador web moderno** (Chrome, Firefox, Edge, etc.)
 
-- Los endpoints HTTP están en `controller.py`:
-  - `POST /server/start` – enciende el servidor (lanza `Servidor.py` como proceso).
-  - `POST /server/stop` – apaga el servidor.
-  - `POST /client/connect` – abre un socket TCP directo al servidor.
-  - `POST /client/disconnect` – envía `"salir"` y cierra el socket.
-  - `POST /client/send` – envía una pregunta y devuelve la respuesta.
-  - `GET  /history` – historial en memoria.
-  - `POST /exit` – cierra cliente y servidor.
+## Instrucciones de ejecución ##
 
-- Por robustez, el backend actúa como cliente TCP integrado (sin usar `input()`/`print()`), lo que evita
-  problemas con "pipes" bloqueantes típicos de procesos interactivos.
-  Si necesitas forzar el uso exacto de `Cliente.py` como proceso, te puedo pasar una variación del
-  controlador con ese modo.
+1. Abrir una terminal en la carpeta raíz del proyecto.
+2. Instalar dependencias:
 
-- Los colores y estilos viven en `static/css/styles.css`.
-- Toda la UI está en `index.html` y `static/js/app.js`.
+   ```bash
+   pip install flask
+   ```
+3. Ejecutar el controlador principal:
 
-¡Listo!
+   ```bash
+   python controller.py
+   ```
+4. Abrir el navegador en:
+
+   ```
+   http://127.0.0.1:5000/
+   ```
+
+##  Endpoints disponibles ##
+
+El archivo `controller.py` expone los siguientes endpoints HTTP:
+
+* Servidor
+
+  * `POST /server/start` → Enciende el servidor (`Servidor.py` como proceso).
+  * `POST /server/stop` → Apaga el servidor.
+
+* Cliente
+
+  * `POST /client/connect` → Conecta el cliente TCP al servidor.
+  * `POST /client/disconnect` → Envía `salir` y cierra la conexión.
+  * `POST /client/send` → Envía un mensaje al servidor y devuelve la respuesta.
+
+* Historial
+
+  * `GET /history` → Devuelve el historial de mensajes en memoria.
+
+* Finalización
+
+  * `POST /exit` → Cierra cliente y servidor.
+
+## Componentes principales ##
+
+* `controller.py` → Controlador Flask que actúa como intermediario entre la UI y el Cliente-Servidor.
+* `Servidor.py` → Implementa el servidor TCP.
+* `Cliente.py` → Implementa el cliente TCP.
+  *(Nota: en esta versión, el backend integra un cliente TCP propio para evitar bloqueos con `input()`/`print()`. Esto mejora la robustez del sistema).*
+* `templates/index.html` → Interfaz principal en el navegador.
+* `static/js/app.js` → Lógica de interacción cliente-web (AJAX/Fetch API).
+* `static/css/styles.css` → Estilos de la interfaz web.
+
+## Interfaz gráfica ##
+
+La interfaz muestra:
+
+* Botones para encender/apagar servidor y conectar/desconectar cliente.
+* Un campo de texto para enviar preguntas/mensajes al servidor.
+* Un panel para visualizar **respuestas y el historial**.
+
+Los estilos se definen en `static/css/styles.css` y pueden personalizarse fácilmente.
+
+## Ficha técnica del sistema ##
+
+## Arquitectura ##
+
+* Frontend: HTML, CSS, JavaScript
+* Backend: Python (Flask)
+* Comunicación interna: HTTP entre UI ↔ Flask, y TCP entre Cliente ↔ Servidor
+
+## Tecnologías ##
+
+* Lenguaje: Python 3.10+
+* Framework web: Flask
+* Sockets TCP: módulo estándar `socket` de Python
+* Interfaz: HTML5, CSS3, JavaScript (vanilla)
+
+## Flujo de trabajo ##
+
+1. El usuario interactúa con la UI web.
+2. Flask recibe las solicitudes HTTP y ejecuta acciones en cliente/servidor TCP.
+3. El servidor TCP responde al cliente.
+4. Flask envía la respuesta al navegador, actualizando el historial.
+
+##  Notas finales ##
+
+* Este proyecto está diseñado para **evitar bloqueos en la comunicación** mediante un cliente TCP integrado en el backend, en lugar de depender de procesos interactivos.
+* Se puede extender fácilmente para:
+
+  * Registrar historial en base de datos.
+  * Mejorar la UI con frameworks frontend.
+  * Implementar autenticación de usuarios.

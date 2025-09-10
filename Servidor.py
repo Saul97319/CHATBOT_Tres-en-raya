@@ -2,6 +2,7 @@ import socket
 import threading
 import unicodedata
 import difflib
+import eliza_engine
 
 HOST = "127.0.0.1"
 PORT = 65432
@@ -260,6 +261,11 @@ def responder(pregunta_original: str) -> str:
     # 2) Preguntas de la base de conocimiento
     if k in QA:
         return QA[k]
+    # 2.5) Intenta respuesta estilo terapeuta (patrones ELIZA)
+    eliza = eliza_engine.eliza_reply(pregunta_original)
+    if eliza is not None:
+        return eliza
+
     sugerencias = difflib.get_close_matches(k, CLAVES, n=1, cutoff=0.82)
     if sugerencias:
         mejor = sugerencias[0]
