@@ -116,6 +116,16 @@ def stop_server_process():
 def index():
     return send_from_directory(str(BASE_DIR), "index.html")
 
+BASE_DIR = Path(__file__).resolve().parent
+
+@app.get("/game.html")
+def serve_game_html():
+    return send_from_directory(BASE_DIR, "game.html")
+
+# Opcional: atajo /game
+@app.get("/game")
+def serve_game_short():
+    return send_from_directory(BASE_DIR, "game.html")
 @app.get("/status")
 def status():
     return jsonify({

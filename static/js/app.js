@@ -1,3 +1,24 @@
+
+// --- INTEGRACIÓN: activador de "El Gato" (Tres en Raya) ---
+function shouldOpenTicTacToe(text){
+  const t = (text||'').normalize('NFD').replace(/\p{Diacritic}/gu,'').toLowerCase()
+const keywords = [
+  /\b(vamos\s+a\s+)?(jugar|juguemos)\b.*\b(tres\s*rayas|tres\s*rayitas|tres\s+en\s+raya|gato|tic\s*-?\s*tac\s*-?\s*toe|tictactoe)\b/,
+  /\b(jugar|quiero\s+jugar|abrir)\b.*\b(gato|tres\s*rayas|tres\s*rayitas|tres\s+en\s+raya|tic\s*-?\s*tac\s*-?\s*toe|tictactoe)\b/,
+  /^\s*(gato|tres\s*rayas|tres\s*rayitas|tres\s+en\s+raya|tic\s*-?\s*tac\s*-?\s*toe|tictactoe)\s*$/
+]
+
+  return keywords.some(rx => rx.test(t))
+}
+function openTicTacToe(){
+  try{
+    window.open('game.html','_blank','noopener,noreferrer')
+  }catch(e){
+    // fallback same tab
+    window.location.href = 'game.html'
+  }
+}
+
 /* global localStorage, fetch */
 const state = {
   serverOn: false,
@@ -107,7 +128,16 @@ async function sendMessage(ev){
   ev && ev.preventDefault()
   const input = document.getElementById('messageInput')
   const text = input.value.trim()
-  if(!text){ return }
+  
+  // Integración juego "El Gato"
+  if(shouldOpenTicTacToe(text)){
+    addMessage('user', text)
+    addMessage('bot', 'Abriendo el juego de tres rayas…')
+    openTicTacToe()
+    input.value = ''
+    return
+  }
+if(!text){ return }
   if(!state.clientOn){ addMessage('bot', 'Conéctate primero.'); return }
   addMessage('user', text)
   input.value = ''

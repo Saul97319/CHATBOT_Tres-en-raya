@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>El Gato (Tres en Raya)</title>
+  <link rel="stylesheet" href="static/css/tictactoe.css" />
+</head>
+<body>
+  <header class="ttt-topbar">
+    <h1>El Gato — ¡Juega contra la IA!</h1>
+    <div class="controls">
+      <label>Tu ficha:</label>
+      <select id="humanMark">
+        <option value="X" selected>X</option>
+        <option value="O">O</option>
+      </select>
+      <button id="btnNew">Nueva partida</button>
+      <button id="btnBack">Volver al chat</button>
+    </div>
+  </header>
+
+  <main class="board-wrap">
+    <div id="board" class="board" role="grid" aria-label="Tablero de El Gato"></div>
+    <aside class="panel">
+      <div id="status" class="status">Tu turno</div>
+      <div class="legend">
+        <p><strong>Reglas:</strong> Haz clic en una casilla vacía. La IA usa <em>minimax</em> para buscar la mejor jugada.</p>
+        <p>Atajos: <kbd>N</kbd> nueva partida, <kbd>B</kbd> volver.</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="foot">
+    <small>Hecho para el proyecto del chatbot — Minimax con poda simple.</small>
+  </footer>
+
+  <script src="static/js/tictactoe.js" defer></script>
+</body>
+</html>
